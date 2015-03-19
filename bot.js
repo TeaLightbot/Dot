@@ -5,13 +5,20 @@ var config = require("./config.json");
 var irc = require("irc");
 
 // Create the bot name
-var bot = new irc.Client(config.server, 'Dot', {channels: config.channels, password: config.password});
+var bot = new irc.Client(config.server, config.name, config);
 
+/*bot.join('#dottest', function(err){
+	console.log(err)
+});*/
 
 // Listen for joins
 bot.addListener("join", function(channel, who) {
 	// Welcome them in!
-	bot.say(channel, who + "...dude...welcome back!");
+	if (who !== config.name){
+		bot.say(channel, 'Hey, ' + who );
+	} else {
+		bot.say(channel, "...");
+	}
 });
 
 // Listen for any message, PM said user when he posts
