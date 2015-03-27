@@ -1,6 +1,7 @@
 var config = require("./config.json");
 var irc = require("irc");
 var commands = require("./commands");
+var helper = require("./helper");
 
 // Create the bot name
 var bot = new irc.Client(config.server, config.name, config);
@@ -9,11 +10,10 @@ var bot = new irc.Client(config.server, config.name, config);
 	console.log(err)
 });*/
 
-// Listen for joins
 bot.addListener("join", function(channel, who) {
-	// Welcome them in!
+	var text = ['Hey, ', 'Howdy, ', 'Hi' ]
 	if (who !== config.name){
-		bot.say(channel, 'Hey, ' + who );
+		bot.say(channel, helper.choose(text) + who );
 	} else {
 		bot.say(channel, "...");
 	}
@@ -22,18 +22,23 @@ bot.addListener("join", function(channel, who) {
 // Listen for any message, PM said user when he posts
 bot.addListener("message", function(from, to, text, message) {
 	console.log(message)
+	var sendTo = from;
+    if (to.indexOf('#') > -1) {
+        sendTo = to;
+    }
 	var split = text.split(' ');
-	console.log(split)
 	if (split[0].charAt(0) === '.'){
 		var command = split[0].split('.')[1];
-		console.log(command)
-		bot.say(from, commands[command](from, to, text, message));
+		try{
+			var resp = commands[command](bot, from, to, text, split);
+			if(resp){
+				bot.say(sendTo, resp);
+			}
+		} catch(err){
+			console.log(err); 	
+			bot.say(sendTo, 'Command not recognised');
+		};
 	}
-});
-
-// Listen for any message, say to him/her in the room
-bot.addListener("message", function(from, to, text, message) {
-	bot.say(config.channels[0], ".");
 });
 
 bot.addListener('error', function(message) {
