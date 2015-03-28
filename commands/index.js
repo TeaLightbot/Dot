@@ -1,5 +1,6 @@
 var helper = require("../helper");
 var user = require("../user/model");
+var config = require("../config");
 
 (function(commands){
 	commands.hello = function(){
@@ -16,7 +17,9 @@ var user = require("../user/model");
 	};
 	
 	commands.part = function(bot, from, to, text, split){
-		bot.part(split[1], "...");		
+		if (config.admin.indexOf(from) > -1){
+			bot.part(split[1], "...");
+		}		
 	};
 		
 })(module.exports)
