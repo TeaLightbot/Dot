@@ -1,4 +1,4 @@
-var User = require("../user/model");
+var User = require("./model");
 
 (function(userCommands){	
 	userCommands.store = function(bot, from, to, text, split){

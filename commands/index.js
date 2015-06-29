@@ -1,5 +1,5 @@
 var helper = require("../helper");
-var user = require("./user");
+var user = require("../user").commands;
 
 (function(commands){
 	commands.hello = function(){

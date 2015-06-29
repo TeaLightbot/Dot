@@ -1,13 +1,9 @@
-var user = require('../user/model');
+var user = require('../user').routes;
 
 module.exports = function(routes){
 	routes.get('/', function(req, res){
 		res.send('...');
 	});		
 	
-	routes.get('/users', function(req, res){
-		user.find().exec(function(err, results){
-			res.send(err || results);
-		});
-	});		
+	routes.get('/users', user.get);		
 };

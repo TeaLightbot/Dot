@@ -1,8 +1,8 @@
-var config = require("./config.json");
+var config = require("./setup/config.json");
 var irc = require("irc");
 var commands = require("./commands");
 var helper = require("./helper");
-var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
+var mongoCon = require("./setup/mongoConnection").connect(config.db, config.dbName);
 
 var express = require("express");
 var app = express();
