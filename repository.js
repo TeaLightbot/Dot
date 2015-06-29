@@ -1,21 +1,21 @@
-(function(dataMapper) {
+(function(repository) {
     "use strict";
 
-    dataMapper.mongoose = require("mongoose");
+    repository.mongoose = require("mongoose");
 
     var Q = require("q"),
         logger = require("log4js").getLogger("mongoCon"),
         connectionHelper = require("./helper");
 
-    dataMapper.connect = function(dbServer, dbName) {
+    repository.connect = function(dbServer, dbName) {
         return connectionHelper.connect(dbServer, dbName);
     };
 
-    dataMapper.disconnect = function() {
+    repository.disconnect = function() {
         return connectionHelper.disconnect();
     };
 
-    dataMapper.findById = function(Model, id) {
+    repository.findById = function(Model, id) {
         return Q.Promise(function(resolve, reject) {
             Model.findById(id, function(err, document) {
                 if(err) {
@@ -28,7 +28,7 @@
         });
     };
 
-    dataMapper.find = function(specification) {
+    repository.find = function(specification) {
         return Q.Promise(function(resolve, reject) {
             var deferredQuery = specification.getModel().find({});
             specification.formQuery(deferredQuery);
@@ -43,7 +43,7 @@
         });
     };
 
-    dataMapper.findOne = function(specification) {
+    repository.findOne = function(specification) {
         return Q.Promise(function(resolve, reject) {
             var deferredQuery = specification.getModel().find({});
             specification.formQuery(deferredQuery);
@@ -58,7 +58,7 @@
         });
     };
 
-    dataMapper.exists = function(specification) {
+    repository.exists = function(specification) {
         return Q.Promise(function(resolve, reject) {
             var deferredQuery = specification.getModel().find({});
             specification.formQuery(deferredQuery);
@@ -73,7 +73,7 @@
         });
     };
 
-    dataMapper.save = function(document) {
+    repository.save = function(document) {
         return Q.Promise(function(resolve, reject) {
             document.save(function(err, document) {
                 if(err) {
@@ -86,7 +86,7 @@
         });
     };
 
-    dataMapper.update = function(document) {
+    repository.update = function(document) {
         return Q.Promise(function(resolve, reject) {
             document.update(function(err, numUpdated) {
                 if(err) {
@@ -99,7 +99,7 @@
         });
     };
 
-    dataMapper.remove = function(Model, document) {
+    repository.remove = function(Model, document) {
         return Q.Promise(function(resolve, reject) {
             Model.findByIdAndRemove(document._doc._id, function(err, document) {
                 if(err) {

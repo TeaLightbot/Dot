@@ -8,11 +8,10 @@ var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
 app.use(require("body-parser").json({ limit: "50mb" }));
 app.use(require("body-parser").urlencoded({ limit: "50mb", extended: true }));
 var server = require("http").createServer(app);
-server.listen(config.port);
+var routes = require("./routes")(app);
 
-app.get('/', function(req, res){
-  res.send('...');
-});
+server.listen(config.httpPort);
+
 
 // Create the bot name
 var bot = new irc.Client(config.server, config.name, config);
