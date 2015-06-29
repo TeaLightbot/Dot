@@ -2,6 +2,17 @@ var config = require("./config.json");
 var irc = require("irc");
 var commands = require("./commands");
 var helper = require("./helper");
+var express = require("express");
+var app = express();
+var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
+app.use(require("body-parser").json({ limit: "50mb" }));
+app.use(require("body-parser").urlencoded({ limit: "50mb", extended: true }));
+var server = require("http").createServer(app);
+server.listen(config.port);
+
+app.get('/', function(req, res){
+  res.send('...');
+});
 
 // Create the bot name
 var bot = new irc.Client(config.server, config.name, config);
