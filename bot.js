@@ -5,8 +5,7 @@ var helper = require("./helper");
 var express = require("express");
 var app = express();
 var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
-app.use(require("body-parser").json({ limit: "50mb" }));
-app.use(require("body-parser").urlencoded({ limit: "50mb", extended: true }));
+var setup = require("./setup/express")(app, config.secret);
 var server = require("http").createServer(app);
 var routes = require("./routes")(app);
 
