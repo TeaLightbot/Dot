@@ -2,22 +2,16 @@ var config = require("./config.json");
 var irc = require("irc");
 var commands = require("./commands");
 var helper = require("./helper");
+var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
+
 var express = require("express");
 var app = express();
-var mongoCon = require("./mongoConnection").connect(config.db, config.dbName);
 var setup = require("./setup/express")(app, config.secret);
 var server = require("http").createServer(app);
 var routes = require("./routes")(app);
-
 server.listen(config.httpPort);
 
-
-// Create the bot name
 var bot = new irc.Client(config.server, config.name, config);
-
-/*bot.join('#dottest', function(err){
-	console.log(err)
-});*/
 
 bot.addListener("join", function(channel, who) {
 	var text = ['Hey, ', 'Howdy, ', 'Hi' ]
@@ -28,7 +22,6 @@ bot.addListener("join", function(channel, who) {
 	}
 });
 
-// Listen for any message, PM said user when he posts
 bot.addListener("message", function(from, to, text, message) {
 	console.log(message)
 	var sendTo = from;

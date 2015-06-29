@@ -1,5 +1,5 @@
 var helper = require("../helper");
-var user = require("../user/model");
+var user = require("./user");
 
 (function(commands){
 	commands.hello = function(){
@@ -19,4 +19,5 @@ var user = require("../user/model");
 		bot.part(split[1], "...");		
 	};
 		
+	commands.store = user.store;
 })(module.exports)
