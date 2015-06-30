@@ -1,12 +1,12 @@
 var helper = require("../helper");
-var user = require("../user").commands;
+var user = require("../user").actions;
 
 (function(responses){
 	responses.parse = function(split){
 		if (split[0] === '++'){
-			return 'plusplus';
+			user.karma(split[1], true);
 		} else if (split[0] === '--'){
-			return 'minusminus';
+			user.karma(split[1], false);
 		} else {
 			return;
 		}

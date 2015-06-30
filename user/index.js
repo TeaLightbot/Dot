@@ -1,5 +1,5 @@
 (function(user){
-	user.commands = require('./commands');
+	user.actions = require('./actions');
 	
 	user.routes = require('./routes');
 })(module.exports)
