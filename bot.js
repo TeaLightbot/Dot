@@ -41,7 +41,7 @@ bot.on("message", function(from, to, text, message) {
 			resp = 'Command not recognised';
 		};
 	} else {
-		resp = responses.parse(split, sendTo);		
+		resp = responses.parse(bot, from, split, sendTo);		
 	}
 	if(resp){
 		bot.say(sendTo, resp);

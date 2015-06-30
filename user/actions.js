@@ -8,8 +8,14 @@ var User = require('./model');
 		});		
 	};
 	
-	actions.karma = function(user, plus){
-		console.log("here", user)
-		User.findOneAndUpdate({name: user}, { $inc: { karma: plus ? 1 : -1 }}).exec(); 
+	actions.karma = function(from, user, plus){
+		if (plus && from === user){
+			plus = false;
+		}
+		User.findOne({name: from}).exec(function(err, result){
+			if (result && result.karma >= 0){
+				User.findOneAndUpdate({name: user}, { $inc: { karma: plus ? 1 : -1 }}).exec();
+			}
+		});
 	};
 })(module.exports)

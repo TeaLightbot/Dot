@@ -2,11 +2,11 @@ var helper = require("../helper");
 var user = require("../user").actions;
 
 (function(responses){
-	responses.parse = function(split){
+	responses.parse = function(bot, from, split, sendTo){
 		if (split[0] === '++'){
-			user.karma(split[1], true);
+			user.karma(from, split[1], true);
 		} else if (split[0] === '--'){
-			user.karma(split[1], false);
+			user.karma(from, split[1], false);
 		} else {
 			return;
 		}
