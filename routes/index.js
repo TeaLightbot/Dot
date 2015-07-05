@@ -1,0 +1,9 @@
+var user = require('../user').routes;
+
+module.exports = function(routes){
+	routes.get('/', function(req, res){
+		res.send('...');
+	});		
+	
+	routes.get('/users', user.get);		
+};

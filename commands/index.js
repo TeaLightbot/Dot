@@ -1,6 +1,5 @@
 var helper = require("../helper");
-var user = require("../user/model");
-var config = require("../config");
+var user = require("../user").actions;
 
 (function(commands){
 	commands.hello = function(){
@@ -22,4 +21,5 @@ var config = require("../config");
 		}		
 	};
 		
+	commands.store = user.store;
 })(module.exports)
