@@ -1,5 +1,6 @@
 var helper = require("../helper");
 var user = require("../user").actions;
+var google = require("../google").actions;
 
 (function(commands){
 	commands.hello = function(){
@@ -20,6 +21,15 @@ var user = require("../user").actions;
 			bot.part(split[1], "...");
 		}		
 	};
-		
+
+	commands.part = function(bot, from, to, text, split) {
+	    if(config.admin.indexOf(from) > -1) {
+	        bot.part(split[1], "...");
+	    }
+	};
+
+	commands.g = google.query;
+	commands.gd = google.queryDesc;
+
 	commands.store = user.store;
 })(module.exports)

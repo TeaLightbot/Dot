@@ -49,7 +49,12 @@ bot.on("message", function(from, to, text, message) {
 });
 
 bot.on("response", function(resp, sendTo) {
-	bot.say(sendTo, resp);
+    if(typeof resp === "string") {
+        resp = [resp];
+    }
+    resp.forEach(function(string) {
+        bot.say(sendTo, string);
+    });
 });
 
 bot.on('error', function(message) {
