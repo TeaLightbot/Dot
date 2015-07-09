@@ -1,6 +1,7 @@
 var helper = require("../helper");
 var user = require("../user").actions;
 var google = require("../google").actions;
+var wikipedia = require("../wikipedia").actions;
 
 (function(commands){
 	commands.hello = function(){
@@ -30,6 +31,7 @@ var google = require("../google").actions;
 
 	commands.g = google.query;
 	commands.gd = google.queryDesc;
+	commands.wik = wikipedia.query;
 
 	commands.store = user.store;
 })(module.exports)
