@@ -21,7 +21,7 @@ var https = require("https");
                 response = JSON.parse(response);
                 
                 extract = response.query.pages[Object.keys(response.query.pages)[0]].extract;
-                bot.emit("response", extract || "Page not found.", sendTo);
+                bot.emit("response", from + ": " + extract || "Page not found.", sendTo);
             });
         }).on('error', function(e) {
             console.log("Got error: " + e.message);
