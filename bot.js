@@ -1,22 +1,22 @@
-var config = require("./setup/config.json");
-var irc = require("irc");
-var commands = require("./commands");
+var config    = require("./setup/config.json");
+var irc       = require("irc");
+var commands  = require("./commands");
 var responses = require("./responses");
-var helper = require("./helper");
-var mongoCon = require("./setup/mongoConnection").connect(config.db, config.dbName);
-var Q = require('q');
+var helper    = require("./helper");
+var mongoCon  = require("./setup/mongoConnection").connect(config.db, config.dbName);
+var Q         = require('q');
 
-var express = require("express");
-var app = express();
-var setup = require("./setup/express")(app, config.secret);
-var server = require("http").createServer(app);
-var routes = require("./routes")(app);
+var express   = require("express");
+var app       = express();
+var setup     = require("./setup/express")(app, config.secret);
+var server    = require("http").createServer(app);
+var routes    = require("./routes")(app);
 server.listen(config.httpPort);
 
 var bot = new irc.Client(config.server, config.name, config);
 
 bot.on("join", function(channel, who) {
-	var text = ['Hey, ', 'Howdy, ', 'Hi, ' ]
+	var text = ['Hey, ', 'Howdy, ', 'Hi, ']
 	if (who !== config.name){
 		bot.say(channel, helper.choose(text) + who );
 	} else {
@@ -37,11 +37,11 @@ bot.on("message", function(from, to, text, message) {
 		try{
 			resp = commands[command](bot, from, to, text, split, sendTo);
 		} catch(err){
-			console.log(err); 	
+			console.log(err);
 			resp = 'Command not recognised';
 		};
 	} else {
-		resp = responses.parse(bot, from, split, sendTo);		
+		resp = responses.parse(bot, from, split, sendTo);
 	}
 	if(resp){
 		bot.say(sendTo, resp);
