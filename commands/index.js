@@ -34,4 +34,11 @@ var wikipedia = require("../wikipedia").actions;
 	commands.wik = wikipedia.query;
 
 	commands.store = user.store;
+	commands.heed = user.heed;
+	commands.notHeed = user.notHeed;
+	commands.T = user.T;
+	commands.Ty = user.Ty;
+	commands.noT = user.noT;
+	commands.wfh = user.wfh;
+	commands.notWfh = user.notWfh;
 })(module.exports)

@@ -16,7 +16,7 @@ server.listen(config.httpPort);
 var bot = new irc.Client(config.server, config.name, config);
 
 bot.on("join", function(channel, who) {
-	var text = ['Hey, ', 'Howdy, ', 'Hi' ]
+	var text = ['Hey, ', 'Howdy, ', 'Hi, ' ]
 	if (who !== config.name){
 		bot.say(channel, helper.choose(text) + who );
 	} else {
