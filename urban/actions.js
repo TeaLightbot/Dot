@@ -26,9 +26,9 @@ var http = require('http');
           //var randomArticle = Math.floor((Math.random() * response.list.length) + 1);
           var definition = response.list[Object.keys(response.list)[0]].definition;
           var example    = response.list[Object.keys(response.list)[0]].example;
-          bot.emit('response', from + ': Definition: ' + definition + ' - Example: ' + example, sendTo);
+          bot.emit('response', 'Definition: ' + definition + ' - Example: ' + example, sendTo);
         }else{
-          bot.emit('response', from + ': Page not found.', sendTo);
+          bot.emit('response', 'Page not found. http://' + options.host + options.path + split.slice(1).join('%20'), sendTo);
         }
       });
 
