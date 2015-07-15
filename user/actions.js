@@ -27,36 +27,41 @@ var User = require('./model');
 		});
 	};
 
-    var employment = function(bot, from, sendTo, value) {
+    var employment = function(bot, from, sendTo, userList, value) {
       User.find({ heed: value }).exec(function(err, results) {
         var names = [];
         results.forEach(function(result) {
-          if(result.name !== from) {
-            names.push(result.name);
-          }
+            if(result.name !== from && result.name in userList[sendTo]) {
+                names.push(result.name);
+            }
         });
-          bot.emit('response', err || '^^^ ' + names.join(', ') + ' ^^^', sendTo);
+          bot.emit('response', err || names.length > 0 ? '^^^ ' + names.join(', ') + ' ^^^' : 'They\'re all slacking...', sendTo);
       });
     };
 
-    actions.heed = function(bot, from, to, text, split, sendTo) {
-        employment(bot, from, sendTo, true);
+    actions.heed = function(bot, from, to, text, split, sendTo, userList) {
+        employment(bot, from, sendTo, userList, true);
     };
 
-    actions.notHeed = function(bot, from, to, text, split, sendTo) {
-        employment(bot, from, sendTo, false);
+    actions.notHeed = function(bot, from, to, text, split, sendTo, userList) {
+        employment(bot, from, sendTo, userList, false);
     };
 
-	actions.T = function(bot, from, to, text, split, sendTo) {
-	  User.find({ tea: true }, 'name').exec(function(err, results) {
-      var names = [];
-      results.forEach(function(result) {
-        if(result.name !== from) {
-          names.push(result.name);
-        }
-      });
-      bot.emit('response', err || names.join(', ') + ': Tea/Coffee?', sendTo);
-	  });
+	actions.T = function(bot, from, to, text, split, sendTo, userList) {
+	    User.find({ tea: true }, 'name').exec(function(err, results) {
+	        var names = [];
+	        var teaParty = false;
+            results.forEach(function(result) {
+                if(result.name !== from && result.name in userList[sendTo]) {
+                    names.push(result.name);
+                } else if(result.name === from) {
+                    teaParty = true;
+                }
+            });
+            bot.emit('response', err || !teaParty ? 'You\'re not invited to the tea party...' :
+                names.length > 0 ? names.join(', ') + ': Tea/Coffee?' :
+                'It\'s a long, solitary walk to the kitchen for you...', sendTo);
+	    });
 	};
 
 	var tea = function(bot, from, sendTo, value) {

@@ -25,7 +25,7 @@ var http = require('http');
         var randomArticle = Math.floor((Math.random() * response.list.length));
         var definition = response.list[Object.keys(response.list)[randomArticle]].definition;
         var example    = response.list[Object.keys(response.list)[randomArticle]].example;
-        bot.emit('response', 'Definition: ' + definition + ' - Example: ' + example, sendTo);
+        bot.emit('response', 'Definition: ' + definition, sendTo);// + ' - Example: ' + example, sendTo);
       }else{
         bot.emit('response', 'Page not found. http://' + options.host + options.path + split.slice(1).join('%20'), sendTo);
       }

@@ -15,6 +15,8 @@ server.listen(config.httpPort);
 
 var bot = new irc.Client(config.server, config.name, config);
 
+var userList = {};
+
 bot.on('join', function(channel, who) {
 	var text = ['Hey, ', 'Howdy, ', 'Hi, '];
 	if (who !== config.name){
@@ -35,7 +37,7 @@ bot.on('message', function(from, to, text, message) {
 	if (split[0].charAt(0) === '.'){
 		var command = split[0].split('.')[1];
 		try{
-			resp = commands[command](bot, from, to, text, split, sendTo);
+			resp = commands[command](bot, from, to, text, split, sendTo, userList);
 		} catch(err){
 			console.log(err);
 			resp = 'Command not recognised';
@@ -55,6 +57,11 @@ bot.on('response', function(resp, sendTo) {
     resp.forEach(function(string) {
         bot.say(sendTo, string);
     });
+});
+
+bot.on('names', function(channel, nicks) {
+    userList[channel] = nicks;
+    console.log(userList);
 });
 
 bot.on('error', function(message) {
