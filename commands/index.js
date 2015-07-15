@@ -2,6 +2,7 @@
 var helper    = require('../helper');
 var user      = require('../user').actions;
 var featureRequest = require('../featureRequest').actions;
+var bugReport = require('../bugReport').actions;
 var google    = require('../modules/google').actions;
 var wikipedia = require('../modules/wikipedia').actions;
 var urban     = require('../modules/urban').actions;
@@ -47,5 +48,6 @@ var urban     = require('../modules/urban').actions;
 	commands.notWfh = user.notWfh;
 
 	commands.featureRequest = featureRequest.store;
+	commands.bugReport = bugReport.store;
 
 })(module.exports);

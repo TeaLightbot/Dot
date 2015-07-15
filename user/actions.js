@@ -27,26 +27,26 @@ var User = require('./model');
 		});
 	};
 
-	var employment = function(bot, sendTo, value) {
-	  User.find({ heed: value }).exec(function(err, results) {
-	    var names = [];
-	    results.forEach(function(result) {
-	      if(result.name !== from) {
-	        names.push(result.name);
-	      }
-	      names.push(result.name);
-	    });
-	      bot.emit('response', err || '^^^ ' + names.join(', ') + ' ^^^', sendTo);
-	  });
-	};
+    var employment = function(bot, from, sendTo, value) {
+      User.find({ heed: value }).exec(function(err, results) {
+        var names = [];
+        results.forEach(function(result) {
+          if(result.name !== from) {
+            names.push(result.name);
+          }
+          names.push(result.name);
+        });
+          bot.emit('response', err || '^^^ ' + names.join(', ') + ' ^^^', sendTo);
+      });
+    };
 
-	actions.heed = function(bot, from, to, text, split, sendTo) {
-	  employment(bot, sendTo, true);
-	};
+    actions.heed = function(bot, from, to, text, split, sendTo) {
+        employment(bot, from, sendTo, true);
+    };
 
-	actions.notHeed = function(bot, from, to, text, split, sendTo) {
-	  employment(bot, sendTo, false);
-	};
+    actions.notHeed = function(bot, from, to, text, split, sendTo) {
+        employment(bot, from, sendTo, false);
+    };
 
 	actions.T = function(bot, from, to, text, split, sendTo) {
 	  User.find({ tea: true }, 'name').exec(function(err, results) {
