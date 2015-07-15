@@ -34,7 +34,6 @@ var User = require('./model');
           if(result.name !== from) {
             names.push(result.name);
           }
-          names.push(result.name);
         });
           bot.emit('response', err || '^^^ ' + names.join(', ') + ' ^^^', sendTo);
       });
