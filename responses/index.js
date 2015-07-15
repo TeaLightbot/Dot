@@ -1,5 +1,5 @@
-var helper = require("../helper");
-var user = require("../user").actions;
+'use strict';
+var user = require('../user').actions;
 
 (function(responses){
 	responses.parse = function(bot, from, split, sendTo){
@@ -11,4 +11,4 @@ var user = require("../user").actions;
 			return;
 		}
 	};
-})(module.exports)
+})(module.exports);

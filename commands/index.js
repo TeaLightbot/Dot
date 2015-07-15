@@ -1,16 +1,17 @@
-var helper    = require("../helper");
-var user      = require("../user").actions;
-var google    = require("../google").actions;
-var wikipedia = require("../wikipedia").actions;
-var urban     = require("../urban").actions;
+'use strict';
+var helper    = require('../helper');
+var user      = require('../user').actions;
+var google    = require('../modules/google').actions;
+var wikipedia = require('../modules/wikipedia').actions;
+var urban     = require('../modules/urban').actions;
 
 (function(commands){
 	commands.hello = function(){
-		return "Hello"
+		return 'Hello';
 	};
 
 	commands.test = function(){
-		var text = ["1", "-1", "icles"];
+		var text = ['1', '-1', 'icles'];
 		return helper.choose(text);
 	};
 
@@ -20,21 +21,21 @@ var urban     = require("../urban").actions;
 
 	commands.part = function(bot, from, to, text, split){
 		if (config.admin.indexOf(from) > -1){
-			bot.part(split[1], "...");
+			bot.part(split[1], '...');
 		}
 	};
 
 	commands.part = function(bot, from, to, text, split) {
-	    if(config.admin.indexOf(from) > -1) {
-	        bot.part(split[1], "...");
-	    }
+    if(config.admin.indexOf(from) > -1) {
+        bot.part(split[1], '...');
+    }
 	};
 
 	commands.g       = google.query;
 	commands.gd      = google.queryDesc;
 	commands.wik     = wikipedia.query;
 	commands.ud      = urban.query;
-	
+
 	commands.store   = user.store;
 	commands.heed    = user.heed;
 	commands.notHeed = user.notHeed;
@@ -43,4 +44,5 @@ var urban     = require("../urban").actions;
 	commands.noT     = user.noT;
 	commands.wfh     = user.wfh;
 	commands.notWfh  = user.notWfh;
-})(module.exports)
+
+})(module.exports);
