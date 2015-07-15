@@ -1,6 +1,7 @@
 'use strict';
 var helper    = require('../helper');
 var user      = require('../user').actions;
+var featureRequest = require('../featureRequest').actions;
 var google    = require('../modules/google').actions;
 var wikipedia = require('../modules/wikipedia').actions;
 var urban     = require('../modules/urban').actions;
@@ -43,6 +44,8 @@ var urban     = require('../modules/urban').actions;
 	commands.Ty      = user.Ty;
 	commands.noT     = user.noT;
 	commands.wfh     = user.wfh;
-	commands.notWfh  = user.notWfh;
+	commands.notWfh = user.notWfh;
+
+	commands.featureRequest = featureRequest.store;
 
 })(module.exports);
