@@ -30,6 +30,9 @@ var User = require('./model');
 	    User.find({ heed: value }).exec(function(err, results) {
 	        var names = [];
 	        results.forEach(function(result) {
+	            if(result.name !== from) {
+	                names.push(result.name);
+	            }
 	            names.push(result.name);
 	        });
 	        bot.emit('response', err || '^^^ ' + names.join(", ") + ' ^^^', sendTo);
@@ -48,7 +51,9 @@ var User = require('./model');
 	    User.find({ tea: true }, "name").exec(function(err, results) {
 	        var names = [];
 	        results.forEach(function(result) {
-	            names.push(result.name);
+	            if(result.name !== from) {
+	                names.push(result.name);
+	            }
 	        });
 	        bot.emit('response', err || names.join(", ") + ': Tea/Coffee?', sendTo);
 	    });
