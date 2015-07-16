@@ -51,20 +51,16 @@ var Thing = require('./thingModel');
     };
 
     actions.karmaQuery = function(bot, from, to, text, split, sendTo) {
-        console.log("here");
         var reasonSplit = findReason(split);
         var name = reasonSplit.name;
         var reason = reasonSplit.reason;
-        console.log("here");
         User.findOne({ name: name || from }).exec(function(err, result) {
             if(result) {
-                console.log("here");
                 bot.emit('response', err || result.name + ': ' + result.karma, sendTo);
                 return;
             }
             Thing.findOne({ name: name }).exec(function(err, result) {
                 if(result) {
-                    console.log("here");
                     bot.emit('response', err || result.name + ': ' + result.karma, sendTo);
                     return;
                 }
