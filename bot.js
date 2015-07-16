@@ -1,16 +1,17 @@
 'use strict';
-var config    = require('./setup/config.json');
-var irc       = require('irc');
-var commands  = require('./commands');
-var responses = require('./responses');
-var helper    = require('./helper');
-var mongoCon  = require('./setup/mongoConnection').connect(config.db, config.dbName);
-var Q         = require('q');
-var express   = require('express');
-var app       = express();
-var setup     = require('./setup/express')(app, config.secret);
-var server    = require('http').createServer(app);
-var routes    = require('./routes')(app);
+var config         = require('./setup/config.json');
+var irc            = require('irc');
+var commands       = require('./commands');
+var responses      = require('./responses');
+var helper         = require('./helper');
+var mongoCon       = require('./setup/mongoConnection').connect(config.db, config.dbName);
+var Q              = require('q');
+var express        = require('express');
+var app            = express();
+var setup          = require('./setup/express')(app, config.secret);
+var server         = require('http').createServer(app);
+var routes         = require('./routes')(app);
+var twitterStreams = require('./modules/twitterStreams/');
 server.listen(config.httpPort);
 
 var bot = new irc.Client(config.server, config.name, config);
@@ -62,6 +63,7 @@ bot.on('response', function(resp, sendTo) {
 bot.on('names', function(channel, nicks) {
     userList[channel] = nicks;
     console.log(userList);
+		twitterStreams.query(bot);
 });
 
 bot.on('error', function(message) {
