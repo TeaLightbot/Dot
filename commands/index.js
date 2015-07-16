@@ -45,7 +45,7 @@ var urban     = require('../modules/urban').actions;
 	commands.Ty      = user.Ty;
 	commands.noT     = user.noT;
 	commands.wfh     = user.wfh;
-	commands.notWfh = user.notWfh;
+	commands.notWfh  = user.notWfh;
 
 	commands.featureRequest = featureRequest.store;
 	commands.bugReport = bugReport.store;
