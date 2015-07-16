@@ -1,7 +1,7 @@
 'use strict';
-var user = require('../user').routes;
-var featureRequest = require('../featureRequest').routes;
-var bugReport = require('../bugReport').routes;
+var user = require('../modules/user').routes;
+var featureRequest = require('../modules/featureRequest').routes;
+var bugReport = require('../modules/bugReport').routes;
 
 module.exports = function(routes){
     routes.get('/', function(req, res) {

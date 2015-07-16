@@ -1,8 +1,8 @@
 'use strict';
 var helper    = require('../helper');
-var user      = require('../user').actions;
-var featureRequest = require('../featureRequest').actions;
-var bugReport = require('../bugReport').actions;
+var user      = require('../modules/user').actions;
+var featureRequest = require('../modules/featureRequest').actions;
+var bugReport = require('../modules/bugReport').actions;
 var google    = require('../modules/google').actions;
 var wikipedia = require('../modules/wikipedia').actions;
 var urban     = require('../modules/urban').actions;

@@ -1,5 +1,5 @@
 'use strict';
-var user = require('../user').actions;
+var user = require('../modules/user').actions;
 
 (function(responses){
 	responses.parse = function(bot, from, split, sendTo){
