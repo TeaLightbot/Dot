@@ -27,17 +27,12 @@ var urban     = require('../modules/urban').actions;
 		}
 	};
 
-	commands.part = function(bot, from, to, text, split) {
-    if(config.admin.indexOf(from) > -1) {
-        bot.part(split[1], '...');
-    }
-	};
-
 	commands.g       = google.query;
 	commands.gd      = google.queryDesc;
 	commands.wik     = wikipedia.query;
 	commands.ud      = urban.query;
 
+	commands.karma   = user.karmaQuery;
 	commands.store   = user.store;
 	commands.heed    = user.heed;
 	commands.notHeed = user.notHeed;
