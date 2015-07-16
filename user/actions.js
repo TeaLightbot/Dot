@@ -1,6 +1,7 @@
 'use strict';
 var User = require('./model');
 var Thing = require('./thingModel');
+var KarmaLog = require('./karmaLogModel');
 
 (function(actions){
     actions.store = function(bot, from, to, text, split, sendTo){
@@ -25,12 +26,22 @@ var Thing = require('./thingModel');
     actions.karmaInc = function(from, split, plus){
         var reasonSplit = findReason(split);
         var name = reasonSplit.name;
-        var reason = reasonSplit.reason;
+        
         if (plus && from === name){
             plus = false;
         }
+
+        // db.karmalogs.group({ key: { giver: 1 }, cond: {plus: true}, reduce: function(curr, result){result.total++}, initial: {total: 0} })
+        var karmaLog = new KarmaLog({
+            giver: from,
+            taker: name,
+            plus: plus,
+            reason: reasonSplit.reason
+        });
+
         User.findOne({name: from}).exec(function(err, result){
-            if (result && result.karma >= 0){
+            if(result && result.karma >= 0) {
+                karmaLog.save();
                 User.findOneAndUpdate({ name: name }, { $inc: { karma: plus ? 1 : -1 } })
                 .exec(function(err, result) {
                     if(!result) {
