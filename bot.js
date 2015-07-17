@@ -41,7 +41,7 @@ bot.on('message', function(from, to, text, message) {
 			resp = commands[command](bot, from, to, text, split, sendTo, userList);
 		} catch(err){
 			console.log(err);
-			resp = 'Command not recognised';
+			resp = err;
 		}
 	} else {
 		resp = responses.parse(bot, from, split, sendTo);

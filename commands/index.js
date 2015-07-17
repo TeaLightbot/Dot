@@ -9,6 +9,7 @@ var urban          = require('../modules/urban').actions;
 var danger         = require('./dangerzone');
 var roulette       = require('./roulette');
 var colour         = require('../colour');
+var config				 = require('../setup/config');
 
 (function(commands){
 	commands.hello = function(){
@@ -35,6 +36,7 @@ var colour         = require('../colour');
 	commands.gd      = google.queryDesc;
 	commands.wik     = wikipedia.query;
 	commands.ud      = urban.query;
+	commands.ub 	= urban.battle;
 
 	/* Core Commands */
 	commands.karma   = user.karmaQuery;
