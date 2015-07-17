@@ -6,6 +6,9 @@ var bugReport      = require('../modules/bugReport').actions;
 var google         = require('../modules/google').actions;
 var wikipedia      = require('../modules/wikipedia').actions;
 var urban          = require('../modules/urban').actions;
+var danger         = require('./dangerzone');
+var roulette       = require('./roulette');
+var colour         = require('../colour');
 
 (function(commands){
 	commands.hello = function(){
@@ -13,7 +16,7 @@ var urban          = require('../modules/urban').actions;
 	};
 
 	commands.test = function(){
-		var text = ['1', '-1', 'icles'];
+		var text = ['1', '-1', 'icles', colour.dance + ' tests'];
 		return helper.choose(text);
 	};
 
@@ -43,6 +46,10 @@ var urban          = require('../modules/urban').actions;
 	commands.noT     = user.noT;
 	commands.wfh     = user.wfh;
 	commands.notWfh  = user.notWfh;
+
+	/* Stand Alones */
+	commands.dangerzone = danger.zone;
+	commands.roulette   = roulette.trigger;
 
 	/* Maintenance Commands */
 	commands.featureRequest = featureRequest.store;
