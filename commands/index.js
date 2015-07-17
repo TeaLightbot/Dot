@@ -1,11 +1,11 @@
 'use strict';
-var helper    = require('../helper');
-var user      = require('../modules/user').actions;
+var helper         = require('../helper');
+var user           = require('../modules/user').actions;
 var featureRequest = require('../modules/featureRequest').actions;
-var bugReport = require('../modules/bugReport').actions;
-var google    = require('../modules/google').actions;
-var wikipedia = require('../modules/wikipedia').actions;
-var urban     = require('../modules/urban').actions;
+var bugReport      = require('../modules/bugReport').actions;
+var google         = require('../modules/google').actions;
+var wikipedia      = require('../modules/wikipedia').actions;
+var urban          = require('../modules/urban').actions;
 
 (function(commands){
 	commands.hello = function(){
@@ -27,11 +27,13 @@ var urban     = require('../modules/urban').actions;
 		}
 	};
 
+	/* Module Commands */
 	commands.g       = google.query;
 	commands.gd      = google.queryDesc;
 	commands.wik     = wikipedia.query;
 	commands.ud      = urban.query;
 
+	/* Core Commands */
 	commands.karma   = user.karmaQuery;
 	commands.store   = user.store;
 	commands.heed    = user.heed;
@@ -42,7 +44,8 @@ var urban     = require('../modules/urban').actions;
 	commands.wfh     = user.wfh;
 	commands.notWfh  = user.notWfh;
 
+	/* Maintenance Commands */
 	commands.featureRequest = featureRequest.store;
-	commands.bugReport = bugReport.store;
+	commands.bugReport      = bugReport.store;
 
 })(module.exports);
