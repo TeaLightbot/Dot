@@ -33,8 +33,7 @@ var config  = require('../../setup/config.json');
     client.stream('statuses/filter', {track: tracking, follow: following},  function(stream){
       stream.on('data', function(tweet) {
         if(!tweet.delete && (following.indexOf(tweet.user.id_str) > -1) && !tweet.retweeted_status){
-          bot.emit('response', '@' + tweet.user.screen_name + ': ' + tweet.text, sendTo);
-          //console.log('@' + tweet.user.screen_name + ' --- ' + tweet.text.replace(/\r?\n/g, ''));
+          bot.emit('response', '@' + tweet.user.screen_name + ': ' + tweet.text.replace(/\r?\n/g, ''), sendTo);
         }
       });
 
