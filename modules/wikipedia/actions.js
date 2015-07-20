@@ -1,5 +1,6 @@
 'use strict';
 var https = require('https');
+var helper = require('../../helper');
 
 (function(actions) {
   actions.query = function(bot, from, to, text, split, sendTo){
@@ -20,7 +21,7 @@ var https = require('https');
 
       res.on('end', function() {
         response = JSON.parse(response);
-        var extract = response.query.pages[Object.keys(response.query.pages)[0]].extract;
+        var extract = helper.shorten(response.query.pages[Object.keys(response.query.pages)[0]].extract);
         bot.emit('response', from + ': ' + extract || 'Page not found.', sendTo);
       });
     }).on('error', function(e) {

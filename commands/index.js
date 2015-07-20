@@ -1,11 +1,15 @@
 'use strict';
-var helper    = require('../helper');
-var user      = require('../modules/user').actions;
+var helper         = require('../helper');
+var user           = require('../modules/user').actions;
 var featureRequest = require('../modules/featureRequest').actions;
-var bugReport = require('../modules/bugReport').actions;
-var google    = require('../modules/google').actions;
-var wikipedia = require('../modules/wikipedia').actions;
-var urban     = require('../modules/urban').actions;
+var bugReport      = require('../modules/bugReport').actions;
+var google         = require('../modules/google').actions;
+var wikipedia      = require('../modules/wikipedia').actions;
+var urban          = require('../modules/urban').actions;
+var danger         = require('./dangerzone');
+var roulette       = require('./roulette');
+var colour         = require('../colour');
+var config				 = require('../setup/config');
 
 (function(commands){
 	commands.hello = function(){
@@ -13,7 +17,7 @@ var urban     = require('../modules/urban').actions;
 	};
 
 	commands.test = function(){
-		var text = ['1', '-1', 'icles'];
+		var text = ['1', '-1', 'icles', colour.dance + ' tests'];
 		return helper.choose(text);
 	};
 
@@ -27,11 +31,15 @@ var urban     = require('../modules/urban').actions;
 		}
 	};
 
-	commands.g       = google.query;
-	commands.gd      = google.queryDesc;
-	commands.wik     = wikipedia.query;
-	commands.ud      = urban.query;
+	/* Module Commands */
+	commands.g           = google.query;
+	commands.gd          = google.queryDesc;
+	commands.wik         = wikipedia.query;
+	commands.ud          = urban.query;
+	commands.ub          = urban.battle;
+	commands.urban_reset = urban.reset;
 
+	/* Core Commands */
 	commands.karma   = user.karmaQuery;
 	commands.store   = user.store;
 	commands.heed    = user.heed;
@@ -42,7 +50,12 @@ var urban     = require('../modules/urban').actions;
 	commands.wfh     = user.wfh;
 	commands.notWfh  = user.notWfh;
 
+	/* Stand Alones */
+	commands.dangerzone = danger.zone;
+	commands.roulette   = roulette.trigger;
+
+	/* Maintenance Commands */
 	commands.featureRequest = featureRequest.store;
-	commands.bugReport = bugReport.store;
+	commands.bugReport      = bugReport.store;
 
 })(module.exports);
