@@ -36,12 +36,12 @@ var colour = require('../../colour');
 
         if(lastDefinition && lastDefinition.indexOf(split.slice(1)) > -1 && lastDefinition.indexOf(goalWord) === -1){
             wordList.push(split.slice(1));
-            lastDefinition = definition.replace(/\r?\n/g, '').toLowerCase();
-            bot.emit('response', colour.bold + 'Bridge Found - Next definition: ' + colour.normal + definition.replace(/\r?\n/g, ''), sendTo);
+            lastDefinition = definition.replace(/\r?\n/g, '').toLowerCase().substring(0, 450);
+            bot.emit('response', colour.bold + 'Bridge Found - Next definition: \n' + colour.normal + definition.replace(/\r?\n/g, '').substring(0, 450), sendTo);
         }else if(lastDefinition && lastDefinition.indexOf(split.slice(1)) > -1 && lastDefinition.indexOf(goalWord) > -1){
             bot.emit('response', colour.red + colour.bold + 'Goal Found - ' + goalWord + colour.normal + '\nSteps: ' + wordList.length + ' - ' + wordList.join(", "), sendTo);
         }else{
-            bot.emit('response', 'Definition: ' + definition.replace(/\r?\n/g, ''), sendTo);
+            bot.emit('response', 'Definition: ' + definition.replace(/\r?\n/g, '').substring(0, 450), sendTo);
         }
 
       }else{
@@ -68,4 +68,13 @@ var colour = require('../../colour');
       bot.emit('response', 'Urban Battle is between two words!' ,sendTo);
     }
   };
+
+  actions.reset = function(){
+    startWord = null;
+    goalWord = null;
+    wordList = [];
+    lastDefinition = null;
+    return 'Reseting the urban battle.';
+  };
+
 })(module.exports);

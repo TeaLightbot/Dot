@@ -32,11 +32,12 @@ var config				 = require('../setup/config');
 	};
 
 	/* Module Commands */
-	commands.g       = google.query;
-	commands.gd      = google.queryDesc;
-	commands.wik     = wikipedia.query;
-	commands.ud      = urban.query;
-	commands.ub 	= urban.battle;
+	commands.g           = google.query;
+	commands.gd          = google.queryDesc;
+	commands.wik         = wikipedia.query;
+	commands.ud          = urban.query;
+	commands.ub          = urban.battle;
+	commands.urban_reset = urban.reset;
 
 	/* Core Commands */
 	commands.karma   = user.karmaQuery;
