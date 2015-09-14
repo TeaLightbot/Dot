@@ -40,8 +40,7 @@ bot.on('message', function(from, to, text, message) {
 		try{
 			resp = commands[command](bot, from, to, text, split, sendTo, userList);
 		} catch(err){
-			console.log(err);
-			resp = err;
+		    resp = responses.parse(bot, from, split, sendTo);
 		}
 	} else {
 		resp = responses.parse(bot, from, split, sendTo);

@@ -8,7 +8,8 @@ var wikipedia      = require('../modules/wikipedia').actions;
 var urban          = require('../modules/urban').actions;
 var danger         = require('./dangerzone');
 var roulette       = require('./roulette');
-var colour         = require('../colour');
+var colour = require('../colour');
+var response = require('../responses').actions;
 var config				 = require('../setup/config');
 
 (function(commands){
@@ -49,6 +50,9 @@ var config				 = require('../setup/config');
 	commands.noT     = user.noT;
 	commands.wfh     = user.wfh;
 	commands.notWfh  = user.notWfh;
+	commands.set     = response.store;
+	commands.addKey  = response.addKey;
+	commands.addResponse = response.addResponse;
 
 	/* Stand Alones */
 	commands.dangerzone = danger.zone;

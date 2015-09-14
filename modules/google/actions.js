@@ -8,6 +8,7 @@ var google = require('google');
       if(err){
         console.error(err);
       }
+        console.log(links)
       var resp = [from + ': ' + links[0].title + ' - ' + links[0].link, links[0].description];
       bot.emit('response', err || desc ? resp : resp[0], sendTo);
     });
