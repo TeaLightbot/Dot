@@ -10,9 +10,19 @@ var helper = require('../helper');
 		} else if (split[0] === '--'){
 			user.karmaInc(from, split, false);
 		} else {
-		    Response.findOne({ "key": { $in: split }}).lean().exec(function(err, result) {
-		        if(result) {
-		            var resp = helper.choose(result.response);
+		    var regSplit = [];
+		    split.forEach(function(key) {
+		        var anKey = key.replace(/[^A-Za-z0-9]/g, '');
+
+		        if(anKey && anKey.length > 1) {
+		            regSplit.push(new RegExp(anKey));
+		        }
+		    });
+		    console.log(regSplit);
+		    Response.find({ 'key': { $in: regSplit } }).lean().exec(function(err, results) {
+		        split = split.join(' ');
+		        if(results.length === 1 && ~split.indexOf(results[0].key)) {
+		            var resp = helper.choose(results[0].response);
 		            bot.emit('response', err || resp, sendTo);
 		        }
 		    });
