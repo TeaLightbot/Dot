@@ -1,8 +1,48 @@
+###Todo:
+
+##Commands
+
+Better method of registering commands
+
+##FeatureRequest
+
+##BugReport
+
+##Responses
+
+##Wiki
+
+Message limit responses
+
+Case insensitivity or retry with caps on first
+
+##Karma
+
+Things
+
+Benevolent/Malevolent (Most ++es or --es)
+
+##Wiktionary
+
+##Twitter
+
+##Calendar
+
+##Calc
+
+##Wolfram Alpha
+
+##ety
+
+##ud
+
+
 # Dot
 IRC Bot in Node with MongoDB
 
 #Example config
-
+Config lives in setup/config.json.
+config.json is in the .gitignore file for this project.
 {
   "name": "Dot",
 	"server": "irc.foonetic.net",
