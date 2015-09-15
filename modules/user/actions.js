@@ -79,6 +79,24 @@ var KarmaLog = require('./karmaLogModel');
         });
     };
 
+    var board = function(bot, sendTo, leader) {
+        User.find({}).sort({ "karma": leader }).limit(3).exec(function(err, results) {
+            var resp = results ? ["1st - " + results[0].name + " : " + results[0].karma,
+                        "2nd - " + results[1].name + " : " + results[1].karma,
+                        "3rd - " + results[2].name + " : " + results[2].karma, ] : null;
+            bot.emit('response', err || resp, sendTo);
+            return;
+        });
+    }
+
+    actions.leaderboard = function(bot, from, to, text, split, sendTo) {
+        board(bot, sendTo, -1);
+    };
+
+    actions.loserboard = function(bot, from, to, text, split, sendTo) {
+        board(bot, sendTo, 1);
+    };
+
     var employment = function(bot, from, sendTo, userList, value) {
       User.find({ heed: value }).exec(function(err, results) {
         var names = [];
