@@ -1,7 +1,8 @@
 'use strict';
-var User = require('./model');
-var Thing = require('./thingModel');
-var KarmaLog = require('./karmaLogModel');
+var helper =    require("../../helper");
+var User =      require('./model');
+var Thing =     require('./thingModel');
+var KarmaLog =  require('./karmaLogModel');
 
 (function(actions){
     actions.store = function(bot, from, to, text, split, sendTo){
@@ -31,7 +32,6 @@ var KarmaLog = require('./karmaLogModel');
             plus = false;
         }
 
-        // db.karmalogs.group({ key: { giver: 1 }, cond: {plus: true}, reduce: function(curr, result){result.total++}, initial: {total: 0} })
         var karmaLog = new KarmaLog({
             giver: from,
             taker: name,
@@ -95,6 +95,42 @@ var KarmaLog = require('./karmaLogModel');
 
     actions.loserboard = function(bot, from, to, text, split, sendTo) {
         board(bot, sendTo, 1);
+    };
+
+    var compare = function(a, b) {
+        if(a.total < b.total) {
+            return 1;
+        }
+        if(a.total > b.total) {
+            return -1;
+        }
+        return 0;
+    };
+
+    var groupKarmaLog = function(bot, sendTo, plus) {
+        KarmaLog.collection.group(
+            { giver: 1 },
+            { plus: plus },
+            { total: 0 },
+            function(curr, result) { result.total++ },
+            null,
+            true,
+            function(err, results) {
+                results = results.sort(compare);
+                var key = plus ? "internal_ben" : "internal_mal";
+                helper.response(key, function(err, response) {
+                    response = String.format(response, results[0].giver, results[0].total);
+                    bot.emit('response', err || response, sendTo);
+                });
+            });
+    }
+
+    actions.ben = function(bot, from, to, text, split, sendTo) {
+        groupKarmaLog(bot, sendTo, true);
+    };
+
+    actions.mal = function(bot, from, to, text, split, sendTo) {
+        groupKarmaLog(bot, sendTo, false);
     };
 
     var employment = function(bot, from, sendTo, userList, value) {

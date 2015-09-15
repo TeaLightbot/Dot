@@ -18,10 +18,6 @@ Case insensitivity or retry with caps on first
 
 ##Karma
 
-Things
-
-Benevolent/Malevolent (Most ++es or --es)
-
 ##Wiktionary
 
 ##Twitter
