@@ -71,7 +71,8 @@ var config         = require('../setup/config');
 	commands.roulette   = roulette.trigger;
 
 	/* Maintenance Commands */
-	commands.featureRequest = featureRequest.store;
-	commands.bugReport      = bugReport.store;
+	commands.featureRequest  = featureRequest.store;
+	commands.featureRequests = featureRequest.url;
+	commands.bugReport       = bugReport.store;
 
 })(module.exports);
