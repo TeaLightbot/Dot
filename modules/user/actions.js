@@ -141,7 +141,9 @@ var KarmaLog =  require('./karmaLogModel');
                 names.push(result.name);
             }
         });
-          bot.emit('response', err || names.length > 0 ? '^^^ ' + names.join(', ') + ' ^^^' : 'They\'re all slacking...', sendTo);
+        helper.response("internal_employment", function(err, response) {
+            bot.emit('response', err || names.length > 0 ? '^^^ ' + names.join(', ') + ' ^^^' : response, sendTo);
+        });
       });
     };
 
@@ -164,9 +166,15 @@ var KarmaLog =  require('./karmaLogModel');
                     teaParty = true;
                 }
             });
-            bot.emit('response', err || !teaParty ? 'You\'re not invited to the tea party...' :
-                names.length > 0 ? names.join(', ') + ': Tea/Coffee?' :
-                'It\'s a long, solitary walk to the kitchen for you...', sendTo);
+            helper.response("internal_T_notInvited", function(err, notInvited) {
+                helper.response("internal_T_beverage", function(err, beverage) {
+                    helper.response("internal_T_solitary", function(err, solitary) {
+                        bot.emit('response', err || !teaParty ? notInvited :
+                            names.length > 0 ? names.join(', ') + beverage :
+                            solitary, sendTo);
+                    });
+                });
+            });
         });
     };
 
@@ -185,17 +193,21 @@ var KarmaLog =  require('./karmaLogModel');
     };
 
     var home = function(bot, from, sendTo, value) {
-    User.findOneAndUpdate({ name: from }, { wfh: value }).exec(function(err, results) {
-      bot.emit('response', err || from + ' ' + (value ? 'Slacker.' : 'Planning to do some work today then?'), sendTo);
-    });
+        User.findOneAndUpdate({ name: from }, { wfh: value }).exec(function(err, results) {
+            helper.response("internal_home_slacker", function(err, slacker) {
+                helper.response("internal_home_not", function(err, not) {
+                    bot.emit('response', err || from + ' ' + (value ? slacker : not), sendTo);
+                });
+            });
+        });
     };
 
     actions.wfh = function(bot, from, to, text, split, sendTo) {
-      tea(bot, from, sendTo, true);
+      tea(bot, from, sendTo, false);
     };
 
     actions.notWfh = function(bot, from, to, text, split, sendTo) {
-      tea(bot, from, sendTo, false);
+      tea(bot, from, sendTo, true);
     };
 
 })(module.exports);

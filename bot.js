@@ -1,9 +1,10 @@
 'use strict';
 var config         = require('./setup/config.json');
 var irc            = require('irc');
-var commands       = require('./commands');
-var responses      = require('./responses');
-var helper         = require('./helper');
+var hotload        = require('-hotload');
+var commands       = hotload('./commands');
+var responses      = hotload('./responses');
+var helper         = hotload('./helper');
 var mongoCon       = require('./setup/mongoConnection').connect(config.db, config.dbName);
 var Q              = require('q');
 var express        = require('express');
@@ -19,7 +20,7 @@ var bot = new irc.Client(config.server, config.name, config);
 var userList = {};
 
 bot.on('join', function(channel, who) {
-	var text = ['Hey, ', 'Howdy, ', 'Hi, '];
+	var text = ['Hey, ', 'Howdy, ', 'Hi, ', 'Greetings, '];
 	if (who !== config.name){
 		bot.say(channel, helper.choose(text) + who );
 	} else {
