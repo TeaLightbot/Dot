@@ -41,17 +41,21 @@ var config				 = require('../setup/config');
 	commands.urban_reset = urban.reset;
 
 	/* Core Commands */
-	commands.karma   = user.karmaQuery;
-	commands.store   = user.store;
-	commands.heed    = user.heed;
-	commands.notHeed = user.notHeed;
-	commands.T       = user.T;
-	commands.Ty      = user.Ty;
-	commands.noT     = user.noT;
-	commands.wfh     = user.wfh;
-	commands.notWfh  = user.notWfh;
-	commands.set     = response.store;
-	commands.addKey  = response.addKey;
+	commands.karma       = user.karmaQuery;
+	commands.leaderboard = user.leaderboard;
+	commands.loserboard  = user.loserboard;
+	commands.ben         = user.ben;
+	commands.mal         = user.mal;
+	commands.store       = user.store;
+	commands.heed        = user.heed;
+	commands.notHeed     = user.notHeed;
+	commands.T           = user.T;
+	commands.Ty          = user.Ty;
+	commands.noT         = user.noT;
+	commands.wfh         = user.wfh;
+	commands.notWfh      = user.notWfh;
+	commands.set         = response.store;
+	commands.addKey      = response.addKey;
 	commands.addResponse = response.addResponse;
 
 	/* Stand Alones */

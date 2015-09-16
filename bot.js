@@ -62,7 +62,7 @@ bot.on('response', function(resp, sendTo) {
 bot.on('names', function(channel, nicks) {
     userList[channel] = nicks;
     console.log(userList);
-		twitterStreams.query(bot);
+    twitterStreams.query(bot);
 });
 
 bot.on('error', function(message) {

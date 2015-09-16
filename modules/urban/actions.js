@@ -18,6 +18,10 @@ var helper = require('../../helper');
     var response = '';
     http.get(options, function(res) {
     console.log('Got response: ' + res.statusCode);
+    if(res.statusCode !== 200) {
+        bot.emit('response', 'http://' + options.host + options.path + ' is unreachable.', sendTo);
+        return;
+    }
 
     res.on('data', function(chunk) {
       response += chunk;

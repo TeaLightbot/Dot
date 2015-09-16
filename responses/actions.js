@@ -46,5 +46,4 @@ var Response = require('./model');
             });
         });
     };
-
 })(module.exports);
