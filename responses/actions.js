@@ -17,7 +17,7 @@ var Response = require('./model');
         response.save(function(err) {
             bot.emit('response', err || parse[0] + ' saved!', sendTo);
         });
-	};
+    };
 
     actions.addKey = function(bot, from, to, text, split, sendTo) {
         var response = null;

@@ -1,20 +1,22 @@
 'use strict';
-var helper         = require('../helper');
-var user           = require('../modules/user').actions;
-var featureRequest = require('../modules/featureRequest').actions;
-var bugReport      = require('../modules/bugReport').actions;
-var google         = require('../modules/google').actions;
-var wikipedia      = require('../modules/wikipedia').actions;
-var urban          = require('../modules/urban').actions;
-var danger         = require('./dangerzone');
-var roulette       = require('./roulette');
-var colour = require('../colour');
-var response = require('../responses').actions;
-var config				 = require('../setup/config');
+var hotload        = require("hotload");
+var helper         = hotload('../helper');
+var user           = hotload('../modules/user').actions;
+var featureRequest = hotload('../modules/featureRequest').actions;
+var bugReport      = hotload('../modules/bugReport').actions;
+var google         = hotload('../modules/google').actions;
+var wikipedia      = hotload('../modules/wikipedia').actions;
+var urban          = hotload('../modules/urban').actions;
+var help           = hotload('../modules/help').actions;
+var danger         = hotload('./dangerzone');
+var roulette       = hotload('./roulette');
+var colour         = hotload('../colour');
+var response       = hotload('../responses').actions;
+var config         = require('../setup/config');
 
 (function(commands){
 	commands.hello = function(){
-		return 'Hello';
+		return 'I don\'t like your face';
 	};
 
 	commands.test = function(){
@@ -31,6 +33,10 @@ var config				 = require('../setup/config');
 			bot.part(split[1], '...');
 		}
 	};
+
+	commands.list = function(bot, from) {
+	    bot.emit('response', Object.keys(commands).join(', '), from);
+	}
 
 	/* Module Commands */
 	commands.g           = google.query;
@@ -57,13 +63,16 @@ var config				 = require('../setup/config');
 	commands.set         = response.store;
 	commands.addKey      = response.addKey;
 	commands.addResponse = response.addResponse;
+	commands.help        = help.get;
+	commands.addHelp     = help.store;
 
 	/* Stand Alones */
 	commands.dangerzone = danger.zone;
 	commands.roulette   = roulette.trigger;
 
 	/* Maintenance Commands */
-	commands.featureRequest = featureRequest.store;
-	commands.bugReport      = bugReport.store;
+	commands.featureRequest  = featureRequest.store;
+	commands.featureRequests = featureRequest.url;
+	commands.bugReport       = bugReport.store;
 
 })(module.exports);
