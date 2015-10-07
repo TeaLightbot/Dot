@@ -1,5 +1,6 @@
 'use strict';
+var hotload = require('hotload');
 (function(user){
-	user.actions = require('./actions');
-	user.routes = require('./routes');
+	user.actions = hotload('./actions');
+	user.routes = hotload('./routes');
 })(module.exports);

@@ -75,7 +75,32 @@ var KarmaLog =  require('./karmaLogModel');
                     bot.emit('response', err || result.name + ': ' + result.karma, sendTo);
                     return;
                 }
+                bot.emit('response', err || name + ': ' + 0, sendTo);
             });
+        });
+    };
+
+    actions.reasons = function(bot, from, to, text, split, sendTo) {
+        KarmaLog.find({ taker: from }).exec(function(err, results) {
+            if(results) {
+                var plusCount = 0;
+                var negCount = 0;
+                var reasons = [0];
+                results.forEach(function(result) {
+                    if(result.reason) {
+                        reasons.push((result.plus ? "++" : "--") + " for " + result.reason + " from " + result.giver);
+                    } else {
+                        if(result.plus) {
+                            plusCount++;
+                        } else {
+                            negCount++;
+                        }
+                    }
+                });
+                reasons[0] = plusCount + " ++ and " + negCount + " -- with no reason.";
+                bot.emit('response', err || reasons, from);
+                return;
+            }
         });
     };
 

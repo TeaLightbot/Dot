@@ -12,7 +12,7 @@ var danger         = hotload('./dangerzone');
 var roulette       = hotload('./roulette');
 var colour         = hotload('../colour');
 var response       = hotload('../responses').actions;
-var config         = require('../setup/config');
+var config = require('../setup/config');
 
 (function(commands){
 	commands.hello = function(){
@@ -48,6 +48,7 @@ var config         = require('../setup/config');
 
 	/* Core Commands */
 	commands.karma       = user.karmaQuery;
+	commands.reasons     = user.reasons;
 	commands.leaderboard = user.leaderboard;
 	commands.loserboard  = user.loserboard;
 	commands.ben         = user.ben;

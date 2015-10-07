@@ -1,7 +1,7 @@
 'use strict';
 var config         = require('./setup/config.json');
 var irc            = require('irc');
-var hotload        = require('-hotload');
+var hotload        = require('hotload');
 var commands       = hotload('./commands');
 var responses      = hotload('./responses');
 var helper         = hotload('./helper');
@@ -18,6 +18,7 @@ server.listen(config.httpPort);
 var bot = new irc.Client(config.server, config.name, config);
 
 var userList = {};
+var previousMessage = [""];
 
 bot.on('join', function(channel, who) {
 	var text = ['Hey, ', 'Howdy, ', 'Hi, ', 'Greetings, '];
@@ -55,9 +56,12 @@ bot.on('response', function(resp, sendTo) {
     if(typeof resp === 'string') {
         resp = [resp];
     }
-    resp.forEach(function(string) {
-        bot.say(sendTo, string);
-    });
+	if (previousMessage[0] !== resp[0]){
+		previousMessage[0] = resp[0];
+		resp.forEach(function(string) {
+			bot.say(sendTo, string);
+		});
+	};
 });
 
 bot.on('names', function(channel, nicks) {

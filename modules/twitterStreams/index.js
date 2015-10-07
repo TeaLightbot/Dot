@@ -22,12 +22,9 @@ var colour  = require('../../colour.js');
         /* Push IDs for twitter accounts to followArray - http://tweeterid.com/ */
         var followArray = [];
         // Defaults. For Seils xoxo
-        followArray.push(140118545);    // @Queen_UK
-        followArray.push(242653461);    // @Charles_HRH
-        followArray.push(213589222);    // @PrincePhilipDoE
-        followArray.push(290525588);    // @DukeCambridgeUK
-        followArray.push(402637402);    // @HRHCatherine
         followArray.push(954229010);    // @DevOpsReactions
+        followArray.push(1122192223);   // @FloridaMan
+
         var following = followArray.join(', ');
 
         var tracking = null;
