@@ -23,7 +23,7 @@ var previousMessage = [""];
 bot.on('join', function(channel, who) {
 	var text = ['Hey, ', 'Howdy, ', 'Hi, ', 'Greetings, '];
 	if (who !== config.name){
-		bot.say(channel, helper.choose(text) + who );
+		//bot.say(channel, helper.choose(text) + who );
 	} else {
 		bot.say(channel, '...');
 	}
