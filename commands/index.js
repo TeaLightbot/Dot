@@ -6,6 +6,7 @@ var featureRequest = hotload('../modules/featureRequest').actions;
 var bugReport      = hotload('../modules/bugReport').actions;
 var google         = hotload('../modules/google').actions;
 var wikipedia      = hotload('../modules/wikipedia').actions;
+var wolf           = hotload('../modules/wolframAlpha').actions;
 var urban          = hotload('../modules/urban').actions;
 var help           = hotload('../modules/help').actions;
 var danger         = hotload('./dangerzone');
@@ -34,6 +35,16 @@ var config = require('../setup/config');
 		}
 	};
 
+	commands.cotw = function(bot, from, to, text, split) {
+	    var joint = split.length > 1 ? split.splice(1).join(" ") : "Rainbow";
+	    var response = "";
+	    var colArr = [colour.red, colour.orange, colour.yellow, colour.green, colour.blue, colour.purple, colour.violet];
+	    for(var i = 0; i < joint.length; i++) {
+	        response += colArr[i % 7] + joint[i];
+	    }
+	    return response;
+	}
+
 	commands.list = function(bot, from) {
 	    bot.emit('response', Object.keys(commands).join(', '), from);
 	}
@@ -42,6 +53,7 @@ var config = require('../setup/config');
 	commands.g           = google.query;
 	commands.gd          = google.queryDesc;
 	commands.wik         = wikipedia.query;
+	commands.wa          = wolf.query;
 	commands.ud          = urban.query;
 	commands.ub          = urban.battle;
 	commands.urban_reset = urban.reset;

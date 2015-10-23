@@ -9,6 +9,8 @@ var helper = require('../helper');
             user.karmaInc(from, split, true);
         } else if (split[0] === '--'){
             user.karmaInc(from, split, false);
+        } else if (split[0] === 'Gimme' && (split[1] === 'a' || split[1] === 'an')){
+            return split.splice(2).join(' ');
         } else {
             var regSplit = [];
             split.forEach(function(key) {

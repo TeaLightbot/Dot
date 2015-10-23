@@ -24,11 +24,14 @@ var KarmaLog =  require('./karmaLogModel');
         return { name: split[0], reason: split.length > 1 ? split[1] : null };
     };
 
-    actions.karmaInc = function(from, split, plus){
+    actions.karmaInc = function(from, split, plus) {
+        var user = split[1];
+        var userReason = split.slice(2).join(" ");
+        console.log(userReason);
         var reasonSplit = findReason(split);
         var name = reasonSplit.name;
         
-        if (plus && from === name){
+        if (plus && from === user){
             plus = false;
         }
 
@@ -41,12 +44,12 @@ var KarmaLog =  require('./karmaLogModel');
 
         User.findOne({name: from}).exec(function(err, result){
             if(result && result.karma >= 0) {
-                karmaLog.save();
-                User.findOneAndUpdate({ name: name }, { $inc: { karma: plus ? 1 : -1 } })
+                User.findOneAndUpdate({ name: user }, { $inc: { karma: plus ? 1 : -1 } })
                 .exec(function(err, result) {
                     if(!result) {
                         Thing.findOneAndUpdate({ name: name }, { $inc: { karma: plus ? 1 : -1 } })
                         .exec(function(err, result) {
+                            karmaLog.save();
                             if(!result) {
                                 var thing = new Thing({
                                     name: name,
@@ -55,6 +58,10 @@ var KarmaLog =  require('./karmaLogModel');
                                 thing.save();
                             }
                         });
+                    } else {
+                        karmaLog.taker = user;
+                        karmaLog.reason = userReason;
+                        karmaLog.save();
                     }
                 });
             }
@@ -88,7 +95,7 @@ var KarmaLog =  require('./karmaLogModel');
                 var reasons = [0];
                 results.forEach(function(result) {
                     if(result.reason) {
-                        reasons.push((result.plus ? "++" : "--") + " for " + result.reason + " from " + result.giver);
+                        reasons.push((result.plus ? "++" : "--") + " " + result.reason + " from " + result.giver);
                     } else {
                         if(result.plus) {
                             plusCount++;
