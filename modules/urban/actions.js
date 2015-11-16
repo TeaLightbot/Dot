@@ -36,8 +36,7 @@ var helper = require('../../helper');
         var definition    = helper.shorten(
           response.list[Object.keys(response.list)[randomArticle]]
           .definition
-          .replace(/\r?\n/g, '')
-          .toLowerCase());
+          .replace(/\r?\n/g, ''));
 
         if(startWord && goalWord && !lastDefinition){
           lastDefinition = definition.replace(/\r?\n/g, '').toLowerCase();
