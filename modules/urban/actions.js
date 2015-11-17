@@ -28,7 +28,7 @@ var helper = require('../../helper');
       console.log('BODY: ' + chunk);
     });
 
-    res.on('end', function() { 
+    res.on('end', function() {
       response = JSON.parse(response);
       console.log(response);
       if(response.result_type === 'exact'){
