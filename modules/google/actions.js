@@ -8,8 +8,17 @@ var google = require('google');
       if(err){
         console.error(err);
       }
+      console.log(next)
         console.log(links)
-      var resp = [from + ': ' + links[0].title + ' - ' + links[0].link, links[0].description];
+		var index = 0;
+		while (links[index] && links[index].title === ''){
+			index++;
+			if (index > links.length){
+				index--;
+				break;
+			}
+		}
+      var resp = [from + ': ' + links[index].title + ' - ' + links[index].link, links[index].description, links[index].img];
       bot.emit('response', err || desc ? resp : resp[0], sendTo);
     });
   };

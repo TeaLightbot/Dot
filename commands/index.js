@@ -20,6 +20,11 @@ var config = require('../setup/config');
 		return 'I don\'t like your face';
 	};
 
+	commands.c = function(bot, from, to, text, split) {
+        
+	    return eval(split.splice(1).join(""));
+	}
+
 	commands.test = function(){
 		var text = ['1', '-1', 'icles', colour.dance + ' tests'];
 		return helper.choose(text);
@@ -80,8 +85,9 @@ var config = require('../setup/config');
 	commands.addHelp     = help.store;
 
 	/* Stand Alones */
-	commands.dangerzone = danger.zone;
-	commands.roulette   = roulette.trigger;
+	commands.dangerzone   = danger.zone;
+	commands.roulette     = roulette.trigger;
+	commands.rouletteSpin = roulette.spin;
 
 	/* Maintenance Commands */
 	commands.featureRequest  = featureRequest.store;
