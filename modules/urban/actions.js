@@ -1,5 +1,5 @@
 'use strict';
-var http = require('http');
+var http = require('https');
 var colour = require('../../colour');
 var helper = require('../../helper');
 
@@ -11,7 +11,10 @@ var helper = require('../../helper');
   actions.query = function(bot, from, to, text, split, sendTo){
     var options = {
       host: 'api.urbandictionary.com',
-      port: 80,
+      port: 443,
+		checkServerIdentity: function (host, cert) {
+		return;
+		},
       path: '/v0/define?term=' + split.slice(1).join('%20')
     };
 
@@ -53,7 +56,7 @@ var helper = require('../../helper');
         }
 
       }else{
-        bot.emit('response', 'Page not found. http://' + options.host + options.path, sendTo);
+        bot.emit('response', 'Left as an exercise for the reader.', sendTo);
       }
     });
 

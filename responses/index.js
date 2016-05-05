@@ -7,7 +7,11 @@ var helper = require('../helper');
     responses.parse = function(bot, from, split, sendTo){
         if (split[0] === '++'){
             user.karmaInc(from, split, true);
-        } else if (split[0] === '--'){
+        } else if(split[0] === '--') {
+            if(split[1] == "Dot") {
+                var fuck = helper.choose(['off', 'you', 'donut', 'shakespeare', 'linus', 'king', 'chainsaw', 'outside', 'madison', 'nugget', 'yoda', 'bus', 'shutup'])
+                bot.emit('response', 'https://foaas.com/' + fuck + '/' + from +'/Dot', sendTo);
+            }
             user.karmaInc(from, split, false);
         } else if (split[0] === 'Gimme' && (split[1] === 'a' || split[1] === 'an')){
             return split.splice(2).join(' ');

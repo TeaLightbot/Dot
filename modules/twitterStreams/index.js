@@ -22,7 +22,8 @@ var colour  = require('../../colour.js');
         /* Push IDs for twitter accounts to followArray - http://tweeterid.com/ */
         var followArray = [];
         // Defaults. For Seils xoxo
-        followArray.push(954229010);    // @DevOpsReactions
+        followArray.push(116568685);    // @SadServer
+		followArray.push(22495490);	// @IronShay
         followArray.push(1122192223);   // @FloridaMan
 
         var following = followArray.join(', ');
@@ -31,7 +32,7 @@ var colour  = require('../../colour.js');
 
         client.stream('statuses/filter', {track: tracking, follow: following},  function(stream){
             stream.on('data', function(tweet) {
-                if(!tweet.delete && (following.indexOf(tweet.user.id_str) > -1) && !tweet.retweeted_status){
+                if(!tweet.delete && (following.indexOf(tweet.user.id_str) > -1) && !tweet.retweeted_status && tweet.text[0] != '@'){
                     var output = colour.blue + '@' + tweet.user.screen_name + ': ' + colour.black + colour.normal + tweet.text.replace(/\r?\n/g, '');
 
                     bot.emit('response', output, config.channels);
