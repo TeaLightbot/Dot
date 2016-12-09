@@ -37,7 +37,6 @@ Vue.component('user-list',{
   },
   template: '<li v-bind:class=karmaClass(user.karma)><h3>{{user.name}}</h3>'+
               'Karma: {{user.karma}}' +
-              
             '</li>'
 });
 
@@ -100,60 +99,36 @@ Vue.component('bug-list',{
 var model = {
     responses: [],
     users: [],
-    features: [],
-    bugs: [],
+    featureRequests: [],
+    bugReports: [],
     karmaLogs: [],
     selected: '',
     showPage: "home"
 }; 
   
-var load = function(){
-    var self = this;
+var load = function(self, page){
     $.ajax({
-        url: 'http://lm120156:6849/api/responses',
+        url: 'http://lm120156:6849/api/' + page,
         type: 'get',
         dataType: 'json',
         async: true,
         success: function(data) {
-            self._data.responses = data;
+            self._data[page] = data;
         }
     });
-    $.ajax({
-        url: 'http://lm120156:6849/api/users',
-        type: 'get',
-        dataType: 'json',
-        async: true,
-        success: function(data) {
-            self._data.users = data;
-        }
-    });
-    $.ajax({
-        url: 'http://lm120156:6849/api/featureRequests',
-        type: 'get',
-        dataType: 'json',
-        async: true,
-        success: function(data) {
-            self._data.features = data;
-        }
-    });
-    $.ajax({
-        url: 'http://lm120156:6849/api/bugReports',
-        type: 'get',
-        dataType: 'json',
-        async: true,
-        success: function(data) {
-            self._data.bugs = data;
-        }
-    });
+    
 };
 
 var app = new Vue({
   el: '#app',
   data: model,
-  created: load,
+  //created: {},
   methods: {
-    route: function(page){
+    route: function(page, callback){
       this.showPage = page;
+      if (page !== "home"){
+        load(this, page);
+      }
     },
     sortKarma: function(array){
       array.sort(function(a, b){
@@ -181,7 +156,6 @@ var app = new Vue({
         dataType: 'json',
         async: true,
         success: function(data) {
-          console.log("here")
             data.sort(function(a, b){
               if (a.time && b.time && a.time > b.time){
                 return -1;
@@ -191,7 +165,7 @@ var app = new Vue({
             });
             self._data.karmaLogs = data;
         }
-    });
+      });
     }
   }
 });
