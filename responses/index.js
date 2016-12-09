@@ -1,5 +1,6 @@
 'use strict';
 var user = require('../modules/user').actions;
+var reminder = require('../modules/reminder').actions;
 var Response = require('./model');
 var helper = require('../helper');
 
@@ -15,7 +16,9 @@ var helper = require('../helper');
             user.karmaInc(from, split, false);
         } else if (split[0] === 'Gimme' && (split[1] === 'a' || split[1] === 'an')){
             return split.splice(2).join(' ');
-        } else {
+        } else if ((split[0] === 'Remind' || split[0] === 'remind') && split[1] === 'me' && split[2] === 'to'){
+			return reminder.store(bot, from, split, sendTo);
+		}else {
             var regSplit = [];
             split.forEach(function(key) {
                 var anKey = key.replace(/[^A-Za-z0-9]/g, '');

@@ -179,11 +179,11 @@ var KarmaLog =  require('./karmaLogModel');
       });
     };
 
-    actions.heed = function(bot, from, to, text, split, sendTo, userList) {
+    actions.purps = function(bot, from, to, text, split, sendTo, userList) {
         employment(bot, from, sendTo, userList, true);
     };
 
-    actions.notHeed = function(bot, from, to, text, split, sendTo, userList) {
+    actions.notPurps = function(bot, from, to, text, split, sendTo, userList) {
         employment(bot, from, sendTo, userList, false);
     };
 

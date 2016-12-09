@@ -6,7 +6,7 @@ var schema = mongoose.Schema({
     taker: { type: String, required: true },
     plus: {type: Boolean, required: true },
     reason: { type: String, required: false },
-    time: {type: Date, default: new Date()},
+    time: {type: Date, default: new Date },
     __v: { type: Number, select: false }
 });
 
