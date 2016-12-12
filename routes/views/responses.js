@@ -11,13 +11,17 @@ var model = {
 var app = new Vue({
   el: '#app',
   data: model,
-  //created: {},
+//  created: load(this, 'users'),
   methods: {
-    route: function(page, callback){
+    route: function(page){
       this.showPage = page;
-      if (page !== "home"){
+      if (page !== "home" && page !== 'karma'){
         load(this, page);
       }
+    },
+    karmaRoute: function(){
+      load(this, 'users');
+      this.route('karma');
     },
     sortKarma: sortKarma,
     sortName: sortName,

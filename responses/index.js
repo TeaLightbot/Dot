@@ -18,7 +18,9 @@ var helper = require('../helper');
             return split.splice(2).join(' ');
         } else if ((split[0] === 'Remind' || split[0] === 'remind') && split[1] === 'me' && split[2] === 'to'){
 			return reminder.store(bot, from, split, sendTo);
-		}else {
+		} else if ((split[0] === 'Can' || split[0] === 'can') && split[1] === 'you'){
+			return reminder.storeCommmand(bot, from, split, sendTo);
+		} else {
             var regSplit = [];
             split.forEach(function(key) {
                 var anKey = key.replace(/[^A-Za-z0-9]/g, '');

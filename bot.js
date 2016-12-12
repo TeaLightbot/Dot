@@ -98,6 +98,13 @@ bot.on('response', function(resp, sendTo) {
 	};
 });
 
+bot.on('command', function(resp, sendTo) {
+    if (split[0].charAt(0) === '.'){
+		var command = split[0].split('.')[1];
+		resp = commands[command](bot, from, to, text, split, sendTo, userList);
+	};
+});
+
 bot.on('names', function(channel, nicks) {
     userList[channel] = nicks;
     console.log(userList);
