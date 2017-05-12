@@ -23,7 +23,7 @@ var helper = require('../../helper');
                 if(!anyMatches) {
                     bot.emit('response', from + ': Page not found.', sendTo);
                 } else {
-                    var searchQuery = split;
+                    var searchQuery = response[0];
                     var topHit = response[1][0];
                     var linkToTopHit = response[3][0];
 
