@@ -2,6 +2,7 @@
 var user = require('../modules/user').routes;
 var featureRequest = require('../modules/featureRequest').routes;
 var bugReport = require('../modules/bugReport').routes;
+var inventories = require('../modules/inventory').routes;
 var responses = require('../responses').routes;
 var express = require('express');
 
@@ -17,6 +18,7 @@ module.exports = function(routes){
     routes.get('/api/featureRequests', featureRequest.get);
     routes.get('/api/bugReports', bugReport.get);
     routes.get('/api/responses', responses.get);
+    routes.get('/api/inventories', inventories.get);
 	// routes.get('/keylogger', function(req, res) {
 	// 	logged += req.query.key[0];
     //     res.send();

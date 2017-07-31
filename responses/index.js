@@ -9,9 +9,9 @@ var helper = require('../helper');
         if (split[0] === '++'){
             user.karmaInc(from, split, true);
         } else if(split[0] === '--') {
-            if(split[1] == "Dot") {
+            if(split[1] == "dot") {
                 var fuck = helper.choose(['off', 'you', 'donut', 'shakespeare', 'linus', 'king', 'chainsaw', 'outside', 'madison', 'nugget', 'yoda', 'bus', 'shutup'])
-                bot.emit('response', 'https://foaas.com/' + fuck + '/' + from +'/Dot', sendTo);
+                bot.emit('response', 'https://foaas.com/' + fuck + '/' + from +'/dot', sendTo);
             }
             user.karmaInc(from, split, false);
         } else if (split[0] === 'Gimme' && (split[1] === 'a' || split[1] === 'an')){
@@ -19,7 +19,7 @@ var helper = require('../helper');
         } else if ((split[0] === 'Remind' || split[0] === 'remind') && split[1] === 'me' && split[2] === 'to'){
 			return reminder.store(bot, from, split, sendTo);
 		} else if ((split[0] === 'Can' || split[0] === 'can') && split[1] === 'you'){
-			return reminder.storeCommmand(bot, from, split, sendTo);
+			return reminder.storeCommand(bot, from, split, sendTo);
 		} else {
             var regSplit = [];
             split.forEach(function(key) {

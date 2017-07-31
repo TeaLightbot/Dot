@@ -12,6 +12,7 @@
     <script src="components/userList.js"></script>
     <script src="components/karmaList.js"></script>
     <script src="components/responseList.js"></script>
+    <script src="components/inventoryList.js"></script>
     <link rel="stylesheet" href="/bootstrap/css/simplex.css" />
 </head>
 
@@ -27,6 +28,7 @@
         <button type="button" @click="route('users')" class="btn btn-default">Users</button>
         <button type="button" @click="karmaRoute()" class="btn btn-default">Karma</button>
         <button type="button" @click="route('responses')" class="btn btn-default">Responses</button>
+        <button type="button" @click="inventoryRoute()" class="btn btn-default">Inventories</button>
         <button type="button" @click="route('featureRequests')" class="btn btn-default">Features</button>
         <button type="button" @click="route('bugReports')" class="btn btn-default">Bugs</button>
       </div>
@@ -91,10 +93,25 @@
                 <karma-list :karma="karma" v-for="karma in karmaLogs"></karma-list>
             </ul>
         </div>
+        
+        <div v-show="showPage === 'inventories'" class="bs-component form-group col-lg-10">
+            <h2>Inventories</h2>
+            <div class="col-lg-10">
+                <select class="form-control" v-model="selected" @change="inventorySelect">
+                    <option value="" disabled selected>Select a user...</option>
+                    <option v-for="user in iUsers" v-bind:value="user.name">
+                        {{ user.name }}
+                    </option>
+                </select>
+            </div>
+            <ul class="list-unstyled col-lg-10">
+                <inventory-list :item="item" v-for="item in items"></inventory-list>
+            </ul>
+        </div>
     </div>
        
     <div>
-        <script src="responses.js"></script>
+        <script type="text/javascript" src="responses.js"></script>
     </div>
 </body>
 

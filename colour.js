@@ -27,5 +27,6 @@ module.exports = {
   bold:        '\x02',
   reverse:     '\x16',
   underline:   '\x1F',
-
+  dance1:      '\x01ACTION',
+  dance2:      '\x01'
 };

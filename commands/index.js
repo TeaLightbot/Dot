@@ -9,6 +9,7 @@ var wikipedia      = hotload('../modules/wikipedia').actions;
 var wolf           = hotload('../modules/wolframAlpha').actions;
 var urban          = hotload('../modules/urban').actions;
 var help           = hotload('../modules/help').actions;
+var inventory      = hotload('../modules/inventory').actions;
 var danger         = hotload('./dangerzone');
 var roulette       = hotload('./roulette');
 var colour         = hotload('../colour');
@@ -21,13 +22,35 @@ var config = require('../setup/config');
 		return 'I don\'t like your face';
 	};
 
-	commands.c = function(bot, from, to, text, split) {
+	//commands.c = function(bot, from, to, text, split) {
         
-	    return eval(split.splice(1).join(""));
-	}
+	  //  return eval(split.splice(1).join(""));
+	//}
 
+	commands.roll = function(bot, from, to, text, split){
+		console.log(split)
+		split = split[1].split('d');
+		console.log(split)
+		var count = 1;
+		var sides = 0;
+		if (split[0].length > 0){
+			count = parseInt(split[0]);
+			sides = parseInt(split[1]);
+		} else {
+			sides = parseInt(split[1]);
+		}
+		console.log(count)
+		var resp = "";
+		for(var i = 0; i < count; i++){
+			var number = Math.floor(Math.random() * sides);
+			number ++;
+			resp += number + ", ";
+		}
+		return resp;
+	}
+	
 	commands.test = function(){
-		var text = ['1', '-1', 'icles', colour.dance + ' tests'];
+		var text = ['1', '-1', 'icles', colour.dance1 + ' tests' + colour.dance2];
 		return helper.choose(text);
 	};
 
@@ -64,7 +87,7 @@ var config = require('../setup/config');
 	}
 	
 	commands.msg = function(bot, from, to, text, split) {
-		if (from === "Lightbot"){
+		if (from === "lightbot"){
 			var joint = split.splice(2).join(" ");
 			bot.emit('response', joint, split[1]);
 		}
@@ -100,7 +123,7 @@ var config = require('../setup/config');
 	commands.pool = function(bot, from, to, text, split, sendTo) {
 		var options = {
             host: "poolcue.xyz",
-            path: "/api/players"
+            path: "/api/v1/players"
         };
 		var response = "";
 		var callback = function(res) {
@@ -143,13 +166,17 @@ var config = require('../setup/config');
 	};
 
 	/* Module Commands */
-	//commands.g           = google.query;
+	commands.g           = google.query;
 	commands.gd          = google.queryDesc;
 	commands.wik         = wikipedia.query;
 	commands.wa          = wolf.query;
 	commands.ud          = urban.query;
 	commands.ub          = urban.battle;
 	commands.urban_reset = urban.reset;
+	commands.i 			 = inventory.i;
+	commands.give		 = inventory.give;
+	commands.throw		 = inventory.throw;
+	commands.take 		 = inventory.store;
 
 	/* Core Commands */
 	commands.karma       = user.karmaQuery;

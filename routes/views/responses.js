@@ -1,9 +1,11 @@
 var model = {
     responses: [],
     users: [],
+    iUsers: [],
     featureRequests: [],
     bugReports: [],
     karmaLogs: [],
+    items: [],
     selected: '',
     showPage: "home"
 }; 
@@ -15,7 +17,7 @@ var app = new Vue({
   methods: {
     route: function(page){
       this.showPage = page;
-      if (page !== "home" && page !== 'karma'){
+      if (page !== "home" && page !== 'karma' && page !== 'inventories'){
         load(this, page);
       }
     },
@@ -23,8 +25,13 @@ var app = new Vue({
       load(this, 'users');
       this.route('karma');
     },
+    inventoryRoute: function(){
+      load(this, 'users', 'iUsers', {name: 'Dot'});
+      this.route('inventories');
+    },
     sortKarma: sortKarma,
     sortName: sortName,
-    karmaSelect: karmaSelect
+    karmaSelect: karmaSelect,
+    inventorySelect: inventorySelect
   }
 });

@@ -5,6 +5,10 @@ var Thing =     require('./thingModel');
 var KarmaLog =  require('./karmaLogModel');
 
 (function(actions){
+    function capitalizeFirstLetter(string) {
+       return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
     actions.store = function(bot, from, to, text, split, sendTo){
     var user = new User({
       name: split.length > 1 ? split[1] : from
@@ -44,7 +48,7 @@ var KarmaLog =  require('./karmaLogModel');
 
         User.findOne({name: from}).exec(function(err, result){
             if(result && result.karma >= 0) {
-                User.findOneAndUpdate({ name: user }, { $inc: { karma: plus ? 1 : -1 } })
+                User.findOneAndUpdate({ name: user.toLowerCase() }, { $inc: { karma: plus ? 1 : -1 } })
                 .exec(function(err, result) {
                     if(!result) {
                         Thing.findOneAndUpdate({ name: name }, { $inc: { karma: plus ? 1 : -1 } })
@@ -59,7 +63,7 @@ var KarmaLog =  require('./karmaLogModel');
                             }
                         });
                     } else {
-                        karmaLog.taker = user;
+                        karmaLog.taker = user.toLowerCase();
                         karmaLog.reason = userReason;
                         karmaLog.save();
                     }
@@ -72,7 +76,7 @@ var KarmaLog =  require('./karmaLogModel');
         var reasonSplit = findReason(split);
         var name = reasonSplit.name;
         var reason = reasonSplit.reason;
-        User.findOne({ name: name || from }).exec(function(err, result) {
+        User.findOne({ name: name.toLowerCase() || from }).exec(function(err, result) {
             if(result) {
                 bot.emit('response', err || result.name + ': ' + result.karma, sendTo);
                 return;
@@ -191,7 +195,10 @@ var KarmaLog =  require('./karmaLogModel');
         User.find({ tea: true }, 'name').exec(function(err, results) {
             var names = [];
             var teaParty = false;
+            console.log(userList);
+            console.log(sendTo);
             results.forEach(function(result) {
+                console.log(result.name in userList[sendTo]);
                 if(result.name !== from && result.name in userList[sendTo]) {
                     names.push(result.name);
                 } else if(result.name === from) {

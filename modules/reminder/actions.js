@@ -48,7 +48,7 @@ var util           = require("util");
 		return 'Okay, ' + from + ", I'll remind you.";
 	};
 	
-	actions.store = function(bot, from, split, sendTo) {
+	actions.storeCommand = function(bot, from, split, sendTo) {
         var response = null;
         if(split.length === 2) {
             return "You haven't supplied a message...";
@@ -58,7 +58,7 @@ var util           = require("util");
 		if (split.length < 2) {
 			return;
 		}
-		if (split[0].charAt(0) === '.'){
+		if (split[0].charAt(0) !== '.'){
 			return "No valid command given."
 		}
 		var timing = split[1].split(' ');
@@ -85,6 +85,7 @@ var util           = require("util");
         var reminder = new Reminder({
             command: split[0],
             from: from,
+			to: sendTo,
 			sendTo: sendTo,
 			date: time
         });
@@ -102,7 +103,7 @@ var util           = require("util");
 						if(result.message) { 
 							bot.emit('response', result.from + ': ' + result.message , result.sendTo);
 						} else {
-							bot.emit('command', result.command , result.sendTo);
+							bot.emit('command', result);
 						}
 						result.sent = true;
 						result.save();

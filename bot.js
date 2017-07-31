@@ -14,11 +14,14 @@ var setup          = require('./setup/express')(app, config.secret);
 var server         = require('http').createServer(app);
 var routes         = require('./routes')(app);
 var twitterStreams = require('./modules/twitterStreams/');
+var https		   = require('https');
 server.listen(config.httpPort);
 
 var bot = new irc.Client(config.server, config.name, config);
 
-var userList = {};
+var userList = { '#general': {},
+  '#dottest': {}
+}
 var previousMessage = [""];
 var previousCommand = [""];
 
@@ -51,11 +54,6 @@ bot.on('message', function(from, to, text, message) {
     if (to.indexOf('#') > -1) {
       sendTo = to;
     }
-	if (from === 'SeniorDaniel' && count % 57 == 0){
-		count++;
-		var faust = ['https://en.wikipedia.org/wiki/Deal_with_the_Devil', "All words, thoughts and opinions expressed by Dan Morrison™ are sole property of Lockheed Martin", "https://open.spotify.com/track/57CXhuTXrLqxXKgLC7UA1s"];
-		bot.say(sendTo, helper.choose(faust));
-	}
 	var split = text.split(' ');
 	var resp = null;
 	if (split[0].charAt(0) === '.'){
@@ -98,11 +96,17 @@ bot.on('response', function(resp, sendTo) {
 	};
 });
 
-bot.on('command', function(resp, sendTo) {
+bot.on('command', function(args) {
+	var resp = '';
+	var split = args.command.split(' ');
     if (split[0].charAt(0) === '.'){
 		var command = split[0].split('.')[1];
-		resp = commands[command](bot, from, to, text, split, sendTo, userList);
+		resp = commands[command](bot, args.from, args.to, args.command, split, args.sendTo, userList);
 	};
+	
+	if(resp){
+		bot.say(args.sendTo, resp);
+	}
 });
 
 bot.on('names', function(channel, nicks) {
@@ -110,6 +114,35 @@ bot.on('names', function(channel, nicks) {
     console.log(userList);
     twitterStreams.query(bot);
 });
+
+var getUserList = function() {
+	var options = {
+		host: "slack.com",
+		path: "/api/users.list?token=" + config.token
+	};
+	var response = "";
+	var callback = function(res) {
+	res.on("error", function(err) {
+		console.log(err);
+	});
+	res.on("data", function(chunk){
+		response += chunk;
+	});
+	res.on("end", function(){
+		console.log(response)
+		var json = JSON.parse(response);
+		userList={'#general':{}, '#dottest':{}};
+		json.members.forEach(function(member){
+			userList['#general'][member.name] = 1;
+			userList['#dottest'][member.name] = 1;
+		});
+		console.log(userList);
+	});
+	}
+	
+	https.request(options, callback).end();
+};
+getUserList();
 
 bot.on('error', function(message) {
     console.log('error: ', message);
