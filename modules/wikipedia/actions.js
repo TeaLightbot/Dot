@@ -8,7 +8,7 @@ var helper = require('../../helper');
             accept: '*/*',
             host: 'en.wikipedia.org',
             port: 443,
-            path: '/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=' + split.slice(1).join('%20')
+            path: '/w/api.php?action=opensearch&format=json&search=' + split.slice(1).join('%20')
         };
         var response = '';
         https.get(options, function(res) {
@@ -19,11 +19,19 @@ var helper = require('../../helper');
 
             res.on('end', function() {
                 response = JSON.parse(response);
-                if(response.query.pages[Object.keys(response.query.pages)[0]].extract == undefined) {
+                var anyMatches = response[0][1].length > 0;
+                if(!anyMatches) {
                     bot.emit('response', from + ': Page not found.', sendTo);
                 } else {
-                    var extract = helper.shorten(response.query.pages[Object.keys(response.query.pages)[0]].extract);
-                    bot.emit('response', from + ': ' + extract, sendTo);
+                    var searchQuery = response[0];
+                    var topHit = response[1][0];
+                    var linkToTopHit = response[3][0];
+
+                    var respondWith = "wiki search for: \"" + searchQuery + "\": ";
+                    respondWith += topHit + " - ";
+                    respondWith += linkToTopHit;
+
+                    bot.emit('response', from + ': ' + respondWith, sendTo);
                 }
             });
         }).on('error', function(e) {
