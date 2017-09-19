@@ -29,7 +29,7 @@ var KarmaLog =  require('./karmaLogModel');
     };
 
     actions.karmaInc = function(from, split, plus) {
-        var user = split[1];
+        var user = split[1].replace('@','');
         var userReason = split.slice(2).join(" ");
         console.log(userReason);
         var reasonSplit = findReason(split);
