@@ -1,5 +1,5 @@
 'use strict';
-var config = require('./config.json')
+var config = require('../../setup/config.json');
 var https = require('https');
 var util = require('util');
 var querystring = require('querystring');
