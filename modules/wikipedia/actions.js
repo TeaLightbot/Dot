@@ -19,20 +19,21 @@ var helper = require('../../helper');
 
             res.on('end', function() {
                 response = JSON.parse(response);
-                var anyMatches = response[0][1].length > 0;
+                var searchQuery = response[0];
+                var anyMatches = response[1].length > 0;
+                var respondWith = "";
+
                 if(!anyMatches) {
-                    bot.emit('response', from + ': Page not found.', sendTo);
+                    respondWith = "No matches found for " + searchQuery;
                 } else {
-                    var searchQuery = response[0];
                     var topHit = response[1][0];
                     var linkToTopHit = response[3][0];
 
-                    var respondWith = "wiki search for: \"" + searchQuery + "\": ";
+                    respondWith = "wiki search for: \"" + searchQuery + "\": ";
                     respondWith += topHit + " - ";
                     respondWith += linkToTopHit;
-
-                    bot.emit('response', from + ': ' + respondWith, sendTo);
                 }
+                bot.emit('response', from + ': ' + respondWith, sendTo);
             });
         }).on('error', function(e) {
             console.log('Got error: ' + e.message);
