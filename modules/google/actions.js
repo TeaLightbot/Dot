@@ -10,7 +10,7 @@ var querystring = require('querystring');
   var req = function(bot, from, split, sendTo) {
     var key = config.google_key;
     var cx = config.google_cx;
-    var query = querystring.escape(split);
+    var query = querystring.escape(split.slice(1).join());
     var targetUrl = util.format(baseGoogleUrl, key, cx, query);
     
     var request = https.get(targetUrl, (response) => {
