@@ -1,41 +1,44 @@
 'use strict';
-var google = require('google');
-var totalSaves = 0;
+var config = require('../../setup/config.json');
+var https = require('https');
+var util = require('util');
+var querystring = require('querystring');
 
 (function(actions) {
-  var req = function(bot, from, split, sendTo, desc) {
-    google.resultsPerPage = 1;
-    google(split.slice(1).join(' '), function(err, next, links) {
-      if(err){
-        console.error(err);
-      }
-      console.log(next)
-      console.log(links)
-		var index = 0;
-    while (links[index] && links[index].title && links[index].title === ''){
-			index++;
-			if (index > links.length){
-				index--;
-				break;
-			}
-		}
-      if(links[index] && links[index].title){
-        var resp = [from + ': ' + links[index].title + ' - ' + links[index].link, links[index].description, links[index].img];
-        bot.emit('response', err || desc ? resp : resp[0], sendTo);
-      }else{
-        totalSaves++;
-        var resp = [from + ': ' + 'Something odd happened there, but at least we didn\'t crash. Bad queries since last bot ejection: ' + totalSaves];
-        bot.emit('response', err || desc ? resp : resp[0], sendTo);
-      }
+  var baseGoogleUrl = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&num=1&fields=items(title,link)&prettyPrint=false&q=%s";
 
+  var req = function(bot, from, split, sendTo) {
+    var key = config.google_key;
+    var cx = config.google_cx;
+    var query = querystring.escape(split.slice(1).join(' '));
+    var targetUrl = util.format(baseGoogleUrl, key, cx, query);
+    
+    var request = https.get(targetUrl, (response) => {
+      response.on('data', (data) => {
+        var googleResult = JSON.parse(data);
+
+        if (googleResult.items > 0) {
+          var firstResult = googleResult.items[0];
+          bot.emit('response', firstResult.title + ' - ' + firstResult.link, sendTo);
+        } else {
+          bot.emit('response', "No results found.", sendTo);
+        }
+      });
     });
   };
 
   actions.query = function(bot, from, to, text, split, sendTo){
-    req(bot, from, split, sendTo, false);
+    req(bot, from, split, sendTo);
   };
 
   actions.queryDesc = function(bot, from, to, text, split, sendTo) {
-    req(bot, from, split, sendTo, true);
+    req(bot, from, split, sendTo);
   };
 })(module.exports);
+
+
+
+
+
+
+
