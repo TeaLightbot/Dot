@@ -1,6 +1,6 @@
 var load = function(self, api, page, additions){
     $.ajax({
-        url: 'http://lm120156:6849/api/' + api,
+        url: 'http://localhost:80/api/' + api,
         type: 'get',
         dataType: 'json',
         async: true,
@@ -19,7 +19,7 @@ var load = function(self, api, page, additions){
 var karmaSelect = function(){
       var self = this;
       $.ajax({
-        url: 'http://lm120156:6849/api/karma?taker=' + this.selected,
+        url: 'http://localhost:80/api/karma?taker=' + this.selected,
         type: 'get',
         dataType: 'json',
         async: true,
@@ -39,7 +39,7 @@ var karmaSelect = function(){
     var inventorySelect = function(){
       var self = this;
       $.ajax({
-        url: 'http://lm120156:6849/api/inventories?user=' + this.selected,
+        url: 'http://localhost:80/api/inventories?user=' + this.selected,
         type: 'get',
         dataType: 'json',
         async: true,
